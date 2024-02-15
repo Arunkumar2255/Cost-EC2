@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - infracost    
+      - main 
 jobs:
   infracost:
     runs-on: ubuntu-latest
