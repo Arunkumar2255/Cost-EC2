@@ -6,7 +6,7 @@ jobs:
   infracost:
     runs-on: ubuntu-latest
     env:
-      working-directory: ec2/
+      working-directory: .ec2/
 
     name: Run Infracost
     steps:
