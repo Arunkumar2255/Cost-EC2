@@ -50,6 +50,10 @@ jobs:
         run: infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost.json
         working-directory: ${{ env.TF_ROOT }}
 
+        # Checkout the current PR branch so we can create a diff.
+      - name: Checkout pr branch
+        uses: actions/checkout@v3
+
       - name: Post Infracost comment
         run: |
           infracost comment github --path=/tmp/infracost.json \
