@@ -5,6 +5,9 @@ on:
 jobs:
   infracost:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     env:
       working-directory: ec2/
 
