@@ -57,7 +57,7 @@ jobs:
                           --format=json \
                           --compare-to=/tmp/infracost-base.json \
                           --out-file=/tmp/infracost.json
-        working-directory: ${{ env.TF_ROOT }}
+        #working-directory: ${{ env.TF_ROOT }}
 
       - name: Post Infracost comment
         run: |
