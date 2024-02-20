@@ -38,7 +38,7 @@ jobs:
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Terraform show
-        run: terraform show -json tfplan.binary > /tmp/base/plan.json
+        run: terraform show -json tfplan.binary > plan.json
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Setup Infracost
@@ -47,7 +47,7 @@ jobs:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
       - name: Infracost breakdown
-        run: infracost breakdown --path=/tmp/base/plan.json --format=json --out-file=/tmp/infracost-base.json
+        run: infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
         working-directory: ${{ env.TF_ROOT }}
 
       # Generate an Infracost diff and save it to a JSON file.
