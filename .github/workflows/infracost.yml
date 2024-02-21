@@ -48,6 +48,13 @@ jobs:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
           working-directory: ${{ env.TF_ROOT }}
 
+          
+      # Checkout the base branch of the pull request (e.g. main/master).
+      - name: Checkout base branch
+        uses: actions/checkout@v4
+        with:
+          ref: '${{ github.event.pull_request.base.ref }}'
+
       - name: Infracost breakdown
         run: infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
         working-directory: ${{ env.TF_ROOT }}
@@ -55,9 +62,7 @@ jobs:
       # Checkout the current PR branch so we can create a diff.
       - name: Checkout PR branch
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          working-directory: ${{ env.TF_ROOT }}
+    
         
       # Generate an Infracost diff and save it to a JSON file.
       - name: Generate Infracost diff
