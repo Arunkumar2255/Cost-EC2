@@ -40,7 +40,9 @@ jobs:
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Terraform show
-        run: terraform show -json tfplan.binary > plan.json
+        run: | 
+           terraform show -json tfplan.binary > plan.json 
+           ls -la
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Setup Infracost
