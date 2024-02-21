@@ -1,4 +1,3 @@
-
 on:
   pull_request:
     branches:
@@ -41,22 +40,25 @@ jobs:
 
       - name: Terraform show
         run: | 
-           terraform show -json tfplan.binary > plan.json 
+           terraform show -json tfplan.binary > /tmp/plan.json
            ls -la && pwd && ls /tmp/
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Setup Infracost
         uses: infracost/actions/setup@v1
         with:
-          api-key: ${{ secrets.INFRACOST_API_KEY }}
-          working-directory: ${{ env.TF_ROOT }}
+           api-key: ${{ secrets.INFRACOST_API_KEY }}
+           working-directory: ${{ env.TF_ROOT }}
+        run: 
+           ls /tmp/
 
-          
       # Checkout the base branch of the pull request (e.g. main/master).
       - name: Checkout base branch
         uses: actions/checkout@v4
         with:
           ref: '${{ github.event.pull_request.base.ref }}'
+        run:
+           ls /tmp/
 
       - name: Infracost breakdown
         run: |
