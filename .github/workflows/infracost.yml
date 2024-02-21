@@ -41,7 +41,7 @@ jobs:
       - name: Terraform show
         run: |
           terraform show -json tfplan.binary > plan.json
-          ls -la && pwd
+          ls -la && pwd && ls /tmp/
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Setup Infracost
@@ -52,7 +52,7 @@ jobs:
 
       - name: Infracost breakdown
         run: |
-          ls -la && pwd
+          ls -la && pwd && ls /tmp/
           infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
         working-directory: ${{ env.TF_ROOT }}
         
