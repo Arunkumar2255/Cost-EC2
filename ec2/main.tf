@@ -16,7 +16,7 @@ terraform {
 ## Create an EC2 Instance
 resource "aws_instance" "web" {
   ami               = "ami-03f4878755434977f"
-  instance_type     = "t3.medium"
+  instance_type     = "t2.medium"
   availability_zone = "ap-south-1b"
   tags = {
     Name = "atlantis-medium"
