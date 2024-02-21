@@ -50,7 +50,7 @@ jobs:
            api-key: ${{ secrets.INFRACOST_API_KEY }}
            working-directory: ${{ env.TF_ROOT }}
       - name: ls    
-        run: 
+        run: |
            ls /tmp/
 
       # Checkout the base branch of the pull request (e.g. main/master).
@@ -58,7 +58,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: '${{ github.event.pull_request.base.ref }}'
-        run:
+      - name: ls    
+        run: |
            ls /tmp/
 
       - name: Infracost breakdown
