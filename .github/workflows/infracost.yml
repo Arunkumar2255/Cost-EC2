@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - main  # Adjust the branch name as needed.
+      - main
 
 jobs:
   infracost:
@@ -12,13 +12,13 @@ jobs:
       pull-requests: write
 
     env:
-      TF_ROOT: ec2/  # Use TF_ROOT for clarity
+      TF_ROOT: ec2/
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Install terraform
+      - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
@@ -39,9 +39,9 @@ jobs:
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Terraform show
-        run: | 
-           terraform show -json tfplan.binary > plan.json 
-           ls -la
+        run: |
+          terraform show -json tfplan.binary > plan.json
+          ls -la
         working-directory: ${{ env.TF_ROOT }}
 
       - name: Setup Infracost
@@ -50,19 +50,15 @@ jobs:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
           working-directory: ${{ env.TF_ROOT }}
 
-      # Generate an Infracost breakdown and save it to a JSON file.
       - name: Infracost breakdown
         run: |
+          ls -la 
           infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
         working-directory: ${{ env.TF_ROOT }}
-
-      # Checkout the current PR branch so we can create a diff.
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
-
-      # Generate an Infracost diff and save it to a JSON file.
+        
       - name: Generate Infracost diff
         run: |
+          ls -la
           infracost diff --path=plan.json \
                           --format=json \
                           --compare-to=/tmp/infracost-base.json \
