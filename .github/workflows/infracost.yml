@@ -61,7 +61,7 @@ jobs:
       - name: Infracost breakdown
         run: |
            ls -la && pwd && ls /tmp/
-         infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
+           infracost breakdown --path=plan.json --format=json --out-file=/tmp/infracost-base.json
         working-directory: ${{ env.TF_ROOT }}
         
       # Checkout the current PR branch so we can create a diff.
