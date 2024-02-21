@@ -49,6 +49,7 @@ jobs:
         with:
            api-key: ${{ secrets.INFRACOST_API_KEY }}
            working-directory: ${{ env.TF_ROOT }}
+      - name: ls    
         run: 
            ls /tmp/
 
