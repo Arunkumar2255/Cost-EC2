@@ -5,7 +5,7 @@ jobs:
   infracost:
     runs-on: your runner 
     env:
-      working-directory: ${{ env.TF_ROOT }} # Update this!
+      TF_ROOT: ec2/  # Use TF_ROOT for clarity # Update this!
 
     name: Run Infracost
     steps:
