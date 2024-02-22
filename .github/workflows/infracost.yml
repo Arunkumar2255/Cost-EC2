@@ -4,6 +4,10 @@ on: [pull_request]
 jobs:
   infracost:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
     env:
       TF_ROOT: ec2/  # Use TF_ROOT for clarity # Update this!
 
