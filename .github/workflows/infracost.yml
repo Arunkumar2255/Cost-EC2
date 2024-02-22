@@ -3,7 +3,7 @@
 on: [pull_request]
 jobs:
   infracost:
-    runs-on: your runner 
+    runs-on: ubuntu-latest
     env:
       TF_ROOT: ec2/  # Use TF_ROOT for clarity # Update this!
 
