@@ -1,61 +1,47 @@
-# The GitHub Actions docs (https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#on)
-# describe other options for 'on', 'pull_request' is a good default.
 on: [pull_request]
 jobs:
   infracost:
+    name: Infracost
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
 
     env:
-      TF_ROOT: ec2/  # Use TF_ROOT for clarity # Update this!
-
-    name: Run Infracost
+      TF_ROOT: ec2/  # Use TF_ROOT for clarity
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-        
-      - name: Install terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_wrapper: false # This is recommended so the `terraform show` command outputs valid JSON
-
-      # IMPORTANT: add any required steps here to set up cloud credentials so Terraform can run
-
-      - name: Terraform init
-        run: terraform init
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        working-directory: ${{ env.TF_ROOT }}
-
-      - name: Terraform plan
-        run: terraform plan -out tfplan.binary
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        working-directory: ${{ env.TF_ROOT }}
-
-      - name: Terraform show
-        run: terraform show -json tfplan.binary > plan.json
-        working-directory: ${{ env.TF_ROOT }}
-
       - name: Setup Infracost
-        uses: infracost/actions/setup@v1
+        uses: infracost/actions/setup@v2
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
-          
-      - name: Generate Infracost JSON
-        run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
-        working-directory: ${{ env.TF_ROOT }}
-        
-      - name: Post Infracost comment
-        uses: infracost/actions/comment@v1
+
+      - name: Checkout base branch
+        uses: actions/checkout@v3
         with:
-          path: /tmp/infracost.json
-          # Choose the commenting behavior, 'update' is a good default:
-          behavior: update # Create a single comment and update it. The "quietest" option.                 
-          # behavior: delete-and-new # Delete previous comments and create a new one.
-          # behavior: hide-and-new # Minimize previous comments and create a new one.
-          # behavior: new # Create a new cost estimate comment on every push.
+          ref: '${{ github.event.pull_request.base.ref }}'
+
+      # Generate Infracost JSON file as the baseline.
+      - name: Generate Infracost cost estimate baseline
+        run: |
+          infracost breakdown --path=${TF_ROOT} \
+                              --format=json \
+                              --out-file=/tmp/infracost-base.json
+      # Checkout the current PR branch so we can create a diff.
+      - name: Checkout PR branch
+        uses: actions/checkout@v3
+
+      # Generate an Infracost diff and save it to a JSON file.
+      - name: Generate Infracost diff
+        run: |
+          infracost diff --path=${TF_ROOT} \
+                          --format=json \
+                          --compare-to=/tmp/infracost-base.json \
+                          --out-file=/tmp/infracost.json
+                          
+      - name: Post Infracost comment
+        run: |
+            infracost comment github --path=/tmp/infracost.json \
+                                     --repo=$GITHUB_REPOSITORY \
+                                     --github-token=${{github.token}} \
+                                     --pull-request=${{github.event.pull_request.number}} \
+                                     --behavior=update
