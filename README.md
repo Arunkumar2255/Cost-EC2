@@ -45,7 +45,7 @@ jobs:
       contents: read
       pull-requests: write
 
-    on: [pull_request]
+  on: [pull_request]
       jobs:
         infracost:
         name: Infracost
