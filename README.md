@@ -29,6 +29,7 @@ INFRACOST_API_KEY: The API key for Infracost.
 Step 1: Clone the repository and switch to the directory:
 
 $ git clone https://github.com/Arunkumar2255/Cost-EC2.git
+
 $ cd Cost-EC2/
 
 Step 2: Configure GitHub Actions
