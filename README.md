@@ -1,5 +1,5 @@
 
-## Readme :- Infracost as a FinOps Tool
+## Infracost as a FinOps Tool
 
 This repository demonstrates the creation of an AWS EC2 instance using Terraform. It includes the use of Infracost to provide cost estimates for the resources created by Terraform scripts. The workflow is designed to trigger cost analysis comments on pull requests, facilitating better cost management in infrastructure development.
 
