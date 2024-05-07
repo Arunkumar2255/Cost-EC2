@@ -45,6 +45,15 @@ jobs:
       contents: read
       pull-requests: write
 
+      on: [pull_request]
+jobs:
+  infracost:
+    name: Infracost
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
     env:
       TF_ROOT: ec2/  # Use TF_ROOT for clarity
     steps:
