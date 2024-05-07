@@ -96,7 +96,7 @@ Step 5: Review and Merge
 Review the cost analysis provided by Infracost in the pull request comments before merging. This helps ensure that all changes are cost-effective and necessary.
 
 
-Troubleshooting
+## Troubleshooting
 
 Ensure AWS credentials and InfraCost API keys are correctly configured in GitHub secrets.
 Verify that the GitHub Actions workflow is correctly set up and triggered.
