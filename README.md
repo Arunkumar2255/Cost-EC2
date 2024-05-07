@@ -15,6 +15,7 @@ Before you begin, ensure you have the following:
 - Access to Infracost with a generated API key.
 
 Secrets
+
 Ensure the following secrets are configured in your repository or CI/CD environment:
 AWS_ACCESS_KEY_ID: Your AWS access key.
 AWS_SECRET_ACCESS_KEY: Your AWS secret key.
