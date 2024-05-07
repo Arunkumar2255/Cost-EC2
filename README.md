@@ -19,7 +19,9 @@ Before you begin, ensure you have the following:
 Ensure the following secrets are configured in your repository or CI/CD environment:
 
 AWS_ACCESS_KEY_ID: Your AWS access key.
+
 AWS_SECRET_ACCESS_KEY: Your AWS secret key.
+
 INFRACOST_API_KEY: The API key for Infracost.
 
 ## Workflow Steps
