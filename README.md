@@ -32,7 +32,6 @@ Step 2: Configure GitHub Actions
 
 Create or modify the infracost.yml file in .github/workflows to set up the GitHub Actions workflow. The workflow triggers on pull requests and uses Infracost to analyze cost differences:
 
-
 on: [pull_request]
 jobs:
   infracost:
