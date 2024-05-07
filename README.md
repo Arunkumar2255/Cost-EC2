@@ -45,12 +45,12 @@ jobs:
       contents: read
       pull-requests: write
 
-   on: [pull_request] 
-   jobs:
-     infracost:
-     name: Infracost
-     runs-on: ubuntu-latest
-     permissions:
+    on: [pull_request] 
+    jobs:
+      infracost:
+      name: Infracost
+      runs-on: ubuntu-latest
+      permissions:
         contents: read
         pull-requests: write
 
