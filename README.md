@@ -36,15 +36,6 @@ $ cd Cost-EC2/
 
 Create or modify the infracost.yml file in .github/workflows to set up the GitHub Actions workflow. The workflow triggers on pull requests and uses Infracost to analyze cost differences:
 
-on: [pull_request]
-jobs:
-  infracost:
-    name: Infracost
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     on: [pull_request] 
     jobs:
       infracost:
