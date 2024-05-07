@@ -26,13 +26,13 @@ INFRACOST_API_KEY: The API key for Infracost.
 
 ## Workflow Steps
 
-Step 1: Clone the repository and switch to the directory:
+## Step 1: Clone the repository and switch to the directory:
 
 $ git clone https://github.com/Arunkumar2255/Cost-EC2.git
 
 $ cd Cost-EC2/
 
-Step 2: Configure GitHub Actions
+## Step 2: Configure GitHub Actions
 
 Create or modify the infracost.yml file in .github/workflows to set up the GitHub Actions workflow. The workflow triggers on pull requests and uses Infracost to analyze cost differences:
 
@@ -85,16 +85,16 @@ jobs:
                                      --behavior=update
 
 
-Step 3: Create a Pull Request
+## Step 3: Create a Pull Request
 
 Change the instance type in the main.tf file from t3.medium to a new type, like t3.large. Then, commit and push your changes to a new branch:
 Next, create a pull request on GitHub against the main branch to initiate the cost analysis workflow.
 
-Step 4: Actions Pipeline
+## Step 4: Actions Pipeline
 
 Monitor the 'Actions' tab in your GitHub repository to view the workflow execution and the automated cost analysis comments on your pull requests.
 
-Step 5: Review and Merge
+## Step 5: Review and Merge
 
 Review the cost analysis provided by Infracost in the pull request comments before merging. This helps ensure that all changes are cost-effective and necessary.
 
